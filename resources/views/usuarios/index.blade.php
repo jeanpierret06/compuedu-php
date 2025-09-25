@@ -17,8 +17,14 @@
                             <th>telefono</th>
                             <th>Correo</th>
                             <th>Rol</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
+                    <a href="{{ route('usuario.create') }}" 
+   class="mb-4 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+    + Nuevo Usuario
+</a>
+
                     <tbody>
                         @foreach($usuarios as $s)
                             <tr>
@@ -28,6 +34,15 @@
                                 <td>{{ $s->TELEFONO_USUARIO }}</td>
                                 <td>{{ $s->EMAIL_USUARIO}}</td>
                                 <td>{{$s->ROL_ID}}</td>
+                                <td>
+     <a href="{{ route('usuario.edit', $s->ID_USUARIOS) }}" class="px-2 py-1 bg-blue-500 text-white rounded">Editar</a>
+    <form action="{{ route('usuario.destroy', $s->ID_USUARIOS) }}" method="POST" style="display:inline" onsubmit="return confirm('¿Eliminar este usuario?')">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="px-2 py-1 bg-red-500 text-white rounded">Eliminar</button>
+    </form>
+</td>
+
                             </tr>
                         @endforeach
                     </tbody>

@@ -23,6 +23,7 @@ class ProgramaController extends Controller
     public function store(StoreProgramaRequest $request)
     {
         Programa::create($request->validated());
+
         return redirect()->route('programa.index')
                          ->with('success', 'Programa creado correctamente.');
     }
@@ -40,14 +41,22 @@ class ProgramaController extends Controller
     public function update(UpdateProgramaRequest $request, Programa $programa)
     {
         $programa->update($request->validated());
+
         return redirect()->route('programa.index')
                          ->with('success', 'Programa actualizado correctamente.');
     }
 
     public function destroy(Programa $programa)
     {
-        $programa->delete();
-        return redirect()->route('programa.index')
-                         ->with('success', 'Programa eliminado correctamente.');
+        try {
+            $programa->delete();
+
+            return redirect()->route('programa.index')
+                             ->with('success', 'Programa eliminado correctamente.');
+        } catch (\Throwable $e) {
+            \Log::error("Error eliminando programa: " . $e->getMessage());
+
+            return back()->withErrors('No se puede eliminar, tiene registros relacionados.');
+        }
     }
 }

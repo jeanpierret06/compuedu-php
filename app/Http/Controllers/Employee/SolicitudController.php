@@ -3,70 +3,56 @@
 namespace App\Http\Controllers\Employee;
 
 use App\Http\Controllers\Controller;
-use App\Models\Solicitud; // <-- CORRECCIÓN 2: Modelo importado
+use App\Models\Solicitud;
+use App\Models\Programa;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreSolicitudRequest;
+use App\Http\Requests\UpdateSolicitudRequest;
 
-// CORRECCIÓN 1: El nombre de la clase ahora es "SolicitudController"
 class SolicitudController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $solicitudes = solicitud::all();
-        return view('solicitud.index',compact('solicitudes'));
+        $solicitudes = Solicitud::with('programa')->get();
+        return view('solicitud.index', compact('solicitudes'));
     }
-    
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
-        //
+        $programas = Programa::all();
+        return view('solicitud.create', compact('programas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreSolicitudRequest $request)
     {
-        //
+        Solicitud::create($request->validated());
+        return redirect()->route('solicitud.index')
+                         ->with('success', 'Solicitud creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    // CORRECCIÓN 3: El método ahora recibe el $id de la solicitud
     public function show($id)
     {
-        $solicitud = Solicitud::with(['programa', 'estudiantes', 'institucions'])
-                                 ->findOrFail($id);
-
+        $solicitud = Solicitud::with('programa')->findOrFail($id);
         return view('solicitud.show', compact('solicitud'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(usuariosEmployee $usuariosEmployee)
+    public function edit(Solicitud $solicitud)
     {
-        //
+        $programas = Programa::all();
+        return view('solicitud.edit', compact('solicitud', 'programas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, usuariosEmployee $usuariosEmployee)
+    public function update(UpdateSolicitudRequest $request, Solicitud $solicitud)
     {
-        //
+        $solicitud->update($request->validated());
+        return redirect()->route('solicitud.index')
+                         ->with('success', 'Solicitud actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(usuariosEmployee $usuariosEmployee)
+    public function destroy(Solicitud $solicitud)
     {
-        //
+        $solicitud->delete();
+        return redirect()->route('solicitud.index')
+                         ->with('success', 'Solicitud eliminada correctamente.');
     }
 }

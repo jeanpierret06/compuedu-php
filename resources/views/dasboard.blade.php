@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Panel COMPUEDU') }}
+            {{ __('Panel de COMPUEDU') }}
         </h2>
     </x-slot>
 
@@ -11,27 +11,27 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-blue-600 text-white p-6 rounded-2xl shadow-lg">
                 <h3 class="text-lg font-semibold">Usuarios</h3>
-                <p class="text-3xl font-bold mt-2">120</p>
+                <p class="text-3xl font-bold mt-2">{{ $totalUsuarios }}</p>
             </div>
 
             <div class="bg-green-600 text-white p-6 rounded-2xl shadow-lg">
                 <h3 class="text-lg font-semibold">Programas</h3>
-                <p class="text-3xl font-bold mt-2">15</p>
+                <p class="text-3xl font-bold mt-2">{{ $totalProgramas }}</p>
             </div>
 
             <div class="bg-purple-600 text-white p-6 rounded-2xl shadow-lg">
                 <h3 class="text-lg font-semibold">Solicitudes</h3>
-                <p class="text-3xl font-bold mt-2">34</p>
+                <p class="text-3xl font-bold mt-2">{{ $totalSolicitudes }}</p>
             </div>
         </div>
 
-        {{-- 🔹 Gráfico con Chart.js --}}
+        {{-- 🔹 Gráfico dinámico con Chart.js --}}
         <div class="bg-white p-6 rounded-2xl shadow-lg">
             <h3 class="text-lg font-semibold mb-4">Solicitudes por Mes</h3>
             <canvas id="solicitudesChart" height="120"></canvas>
         </div>
 
-        {{-- 🔹 Tabla resumida --}}
+        {{-- 🔹 Últimas solicitudes --}}
         <div class="bg-white p-6 rounded-2xl shadow-lg">
             <h3 class="text-lg font-semibold mb-4">Últimas Solicitudes</h3>
             <table class="min-w-full border border-gray-200 rounded-lg overflow-hidden">
@@ -44,30 +44,18 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr>
-                        <td class="px-4 py-2">1</td>
-                        <td class="px-4 py-2">Juan Pérez</td>
-                        <td class="px-4 py-2">Ingeniería</td>
-                        <td class="px-4 py-2">
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Aprobado</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-2">2</td>
-                        <td class="px-4 py-2">María López</td>
-                        <td class="px-4 py-2">Derecho</td>
-                        <td class="px-4 py-2">
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">Pendiente</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-4 py-2">3</td>
-                        <td class="px-4 py-2">Carlos Gómez</td>
-                        <td class="px-4 py-2">Medicina</td>
-                        <td class="px-4 py-2">
-                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">Rechazado</span>
-                        </td>
-                    </tr>
+                    @foreach($ultimasSolicitudes as $solicitud)
+                        <tr>
+                            <td class="px-4 py-2">{{ $solicitud->ID_SOLICITUD }}</td>
+                            <td class="px-4 py-2">{{ $solicitud->NOMBRE }}</td>
+                            <td class="px-4 py-2">{{ $solicitud->programa->DESCRIPCION_PROGRAMA ?? 'N/A' }}</td>
+                            <td class="px-4 py-2">
+                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">
+                                    {{ $solicitud->ESTADO }}
+                                </span>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -81,11 +69,11 @@
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+                labels: {!! json_encode(array_keys($solicitudesPorMes->toArray())) !!},
                 datasets: [{
                     label: 'Solicitudes',
-                    data: [12, 19, 3, 5, 7],
-                    backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#8B5CF6', '#EF4444'],
+                    data: {!! json_encode(array_values($solicitudesPorMes->toArray())) !!},
+                    backgroundColor: '#3B82F6',
                 }]
             },
             options: {

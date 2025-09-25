@@ -8,8 +8,7 @@ class StoreProgramaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        // Cambia si necesitas políticas específicas
-        return true;
+        return true; // Cambiar si usas políticas de acceso
     }
 
     public function rules(): array

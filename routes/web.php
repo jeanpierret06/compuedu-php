@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Employee\ProgramaController;
 use App\Http\Controllers\Employee\SolicitudController;
 use App\Http\Controllers\Employee\UsuarioController;
+use App\Http\Controllers\DashboardController;
 
 
 Route::get('/', function () {
@@ -31,3 +32,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])
 ->resource('usuario',UsuarioController::class)
 ->names('usuario');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth'])
+    ->name('dashboard');

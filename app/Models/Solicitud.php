@@ -48,7 +48,7 @@ class Solicitud extends Model
 
 	public function programa()
 	{
-		return $this->belongsTo(Programa::class, 'PROGRAMA_ID');
+		return $this->belongsTo(Programa::class, 'PROGRAMA_ID', 'ID_PROGRAMA');
 	}
 
 	public function estudiantes()

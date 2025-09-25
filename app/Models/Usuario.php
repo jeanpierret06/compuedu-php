@@ -37,11 +37,12 @@ class Usuario extends Model
 		'APELLIDO_USUARIO',
 		'TELEFONO_USUARIO',
 		'EMAIL_USUARIO',
-		'ROL_ID'
+		'ROL_ID',
 	];
 
 	public function rol()
-	{
-		return $this->belongsTo(Rol::class, 'ROL_ID');
-	}
+{
+    return $this->belongsTo(Rol::class, 'ROL_ID', 'ID_USUA_ROL');
+}
+
 }
