@@ -20,11 +20,10 @@
     
     </head>
     <body class="font-sans antialiased">
-        <img src="{{ asset('images/compuedu.png') }}" alt="Logo" width="120">
 
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen " style="background-color: #1ac252">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->

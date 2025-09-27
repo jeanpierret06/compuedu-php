@@ -1,7 +1,12 @@
-<x-guest-layout>
+<x-guest-register-layout>
     <x-authentication-card>
+        {{-- LOGO personalizado --}}
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img src="{{ asset('images/compuedu.png') }}" alt="CompuEdu" class=" mx-auto mb-2" Width="200rem">
+            <h1 class="text-2xl font-bold text-compuedu-green text-center">Crea tu cuenta</h1>
+            <p class="text-gray-600 text-center text-sm mt-1">
+                Regístrate para acceder a cursos y contenidos digitales
+            </p>
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -10,65 +15,41 @@
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Nombre') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-label for="name" value="{{ __('Nombre completo') }}" class="text-compuedu-green font-semibold" />
+                <x-input id="name"
+                         class="block mt-1 w-full rounded-lg border-gray-300 focus:border-compuedu-green focus:ring-compuedu-green"
+                         type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
             </div>
 
             <div class="mt-4">
-                <x-label for="email" value="{{ __('Correo Elcetronico') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-label for="email" value="{{ __('Correo electrónico') }}" class="text-compuedu-green font-semibold" />
+                <x-input id="email"
+                         class="block mt-1 w-full rounded-lg border-gray-300 focus:border-compuedu-green focus:ring-compuedu-green"
+                         type="email" name="email" :value="old('email')" required autocomplete="username" />
             </div>
 
             <div class="mt-4">
-                <x-label for="password" value="{{ __('Contraseña') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <x-label for="password" value="{{ __('Contraseña') }}" class="text-compuedu-green font-semibold" />
+                <x-input id="password"
+                         class="block mt-1 w-full rounded-lg border-gray-300 focus:border-compuedu-green focus:ring-compuedu-green"
+                         type="password" name="password" required autocomplete="new-password" />
             </div>
 
             <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirmar Contraseña') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-label for="password_confirmation" value="{{ __('Confirmar Contraseña') }}" class="text-compuedu-green font-semibold" />
+                <x-input id="password_confirmation"
+                         class="block mt-1 w-full rounded-lg border-gray-300 focus:border-compuedu-green focus:ring-compuedu-green"
+                         type="password" name="password_confirmation" required autocomplete="new-password" />
             </div>
 
-            <div class="mt-4">
-    <x-label for="role" value="{{ __('Tipo de Usuario') }}" />
-
-    <select id="role" name="role"
-            class="block mt-1 w-full border-gray-300 focus:border-indigo-500
-                   focus:ring-indigo-500 rounded-md shadow-sm"
-            required>
-        <option value="" disabled selected>-- Selecciona un tipo --</option>
-        <option value="administrador">Administrador</option>
-        <option value="estudiante">Estudiante</option>
-        <option value="institucion">Institución</option>
-    </select>
-</div>
-
-
-
-            @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                <div class="mt-4">
-                    <x-label for="terms">
-                        <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-
-                            <div class="ms-2">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                        'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
-                                        'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Privacy Policy').'</a>',
-                                ]) !!}
-                            </div>
-                        </div>
-                    </x-label>
-                </div>
-            @endif
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                    {{ __('¿ya estas registrado?') }}
+            <div class="flex items-center justify-between mt-6">
+                <a class="text-sm text-compuedu-blue hover:text-compuedu-green transition-colors duration-300"
+                   href="{{ route('login') }}">
+                    {{ __('¿Ya tienes una cuenta? Inicia sesión') }}
                 </a>
 
-                <x-button class="ms-4">
-                    {{ __('Registrate') }}
+                <x-button class="px-6 py-2 bg-compuedu-green hover:bg-green-600 text-white font-bold rounded-lg transition-colors duration-300">
+                    {{ __('Registrarme') }}
                 </x-button>
             </div>
         </form>

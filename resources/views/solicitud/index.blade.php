@@ -8,46 +8,47 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                
+
+                <a href="{{ route('solicitud.create') }}" 
+                   class="mb-4 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                    + Nuevo Usuario
+                </a>
+
                 <table id="solicitudes" class="display" style="width:100%">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
-                            <th>id_Programa</th>
                             <th>Fecha Solicitud</th>
                             <th>Estado</th>
-                            <th>programa</th>
+                            <th>Programa</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <a href="{{ route('solicitud.create') }}" 
-   class="mb-4 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-    + Nuevo Usuario
-</a>
                     <tbody>
                         @foreach($solicitudes as $s)
                             <tr>
                                 <td>{{ $s->ID_SOLICITUD }}</td>
                                 <td>{{ $s->NOMBRE }}</td>
-                                <td>{{ $s->PROGRAMA_ID }}</td>
                                 <td>{{ optional($s->FECHA_SOLICITUD)->format('d/m/Y') }}</td>
-                                <td>@if($s->ESTADO == 1)
-                                    <span class="px-2 py-1 bg-green-200 text-green-800 rounded">Aprobada</span>
+                                <td>
+                                    @if($s->ESTADO == 1)
+                                        <span class="px-2 py-1 bg-green-200 text-green-800 rounded">Aprobada</span>
                                     @else
-                                    <span class="px-2 py-1 bg-red-200 text-red-800 rounded">Pendiente</span>
+                                        <span class="px-2 py-1 bg-red-200 text-red-800 rounded">Pendiente</span>
                                     @endif
                                 </td>
-                                <td>{{$s->PROGRAMA}}</td>
+                                <td>{{ $s->programa->DESCRIPCION_PROGRAMA ?? 'Sin carrera' }}</td>
                                 <td class="flex gap-2">
-    <a href="{{ route('solicitud.edit', $s->ID_SOLICITUD) }}" class="px-2 py-1 bg-blue-600 text-white rounded">Editar</a>
-    <form action="{{ route('solicitud.destroy', $s->ID_SOLICITUD) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar esta solicitud?')">
-        @csrf
-        @method('DELETE')
-        <button class="px-2 py-1 bg-red-600 text-white rounded">Eliminar</button>
-    </form>
-</td>
-
+                                    <a href="{{ route('solicitud.edit', $s->ID_SOLICITUD) }}" 
+                                       class="px-2 py-1 bg-blue-600 text-white rounded">Editar</a>
+                                    <form action="{{ route('solicitud.destroy', $s->ID_SOLICITUD) }}" method="POST" 
+                                          onsubmit="return confirm('¿Seguro que deseas eliminar esta solicitud?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="px-2 py-1 bg-red-600 text-white rounded">Eliminar</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -69,7 +70,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-
 
     <script>
         $(function () {

@@ -1,48 +1,58 @@
-<x-guest-layout>
+<x-guest-layout >
     <x-authentication-card>
+        {{-- LOGO personalizado --}}
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img src="{{ asset('images/compuedu.png') }}" alt="CompuEdu" class="mx-auto mb-2" width="200rem">
+            <h1 class="text-2xl font-bold text-compuedu-green text-center">Bienvenido a CompuEdu</h1>
+            <p class="text-gray-600 text-center text-sm mt-1">Plataforma educativa de cursos y contenidos digitales</p>
         </x-slot>
 
+        {{-- Errores de validación --}}
         <x-validation-errors class="mb-4" />
 
-        @session('status')
+        @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
+                {{ session('status') }}
             </div>
-        @endsession
+        @endif
 
+        {{-- Formulario --}}
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+                <x-label for="email" value="{{ __('Correo electrónico') }}" class="text-compuedu-green font-semibold" />
+                <x-input id="email"
+                         class="block mt-1 w-full rounded-lg border-gray-300 focus:border-compuedu-green focus:ring-compuedu-green"
+                         type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
             </div>
 
             <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+                <x-label for="password" value="{{ __('Contraseña') }}" class="text-compuedu-green font-semibold" />
+                <x-input id="password"
+                         class="block mt-1 w-full rounded-lg border-gray-300 focus:border-compuedu-green focus:ring-compuedu-green"
+                         type="password" name="password" required autocomplete="current-password" />
             </div>
 
-            <div class="block mt-4">
+            <div class="block mt-4 flex items-center justify-between">
                 <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                    <x-checkbox id="remember_me" name="remember" class="text-compuedu-green focus:ring-compuedu-green" />
+                    <span class="ms-2 text-sm text-gray-600">{{ __('Recordarme') }}</span>
                 </label>
-            </div>
 
-            <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
+                    <a class="text-sm text-compuedu-blue hover:text-compuedu-green transition-colors duration-300"
+                       href="{{ route('password.request') }}">
+                        {{ __('¿Olvidaste tu contraseña?') }}
                     </a>
                 @endif
+            </div>
 
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
+            <div class="flex items-center justify-center mt-6">
+                <x-button class="px-6 py-2 bg-compuedu-green hover:bg-green-600 text-white font-bold rounded-lg transition-colors duration-300">
+                    {{ __('Iniciar Sesión') }}
                 </x-button>
             </div>
         </form>
     </x-authentication-card>
-</x-guest-layout>
+</x-guest-register-layout>

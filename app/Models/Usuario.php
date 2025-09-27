@@ -45,4 +45,10 @@ class Usuario extends Model
     return $this->belongsTo(Rol::class, 'ROL_ID', 'ID_USUA_ROL');
 }
 
+public function solicitud()
+{
+    return $this->belongsTo(Solicitud::class, 'SOLICITUD_ID', 'ID_SOLICITUD');
+}
+
+
 }

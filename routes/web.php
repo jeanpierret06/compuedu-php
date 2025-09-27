@@ -36,3 +36,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
     ->name('dashboard');
+
+Route::get('/', function () {
+    return view('compuedu');
+});
+

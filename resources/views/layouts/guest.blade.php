@@ -18,9 +18,20 @@
         @livewireStyles
     </head>
     <body>
-        <div class="font-sans text-gray-900 antialiased">
-            {{ $slot }}
-        </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 min-h-screen">
+    <!-- Columna imagen -->
+    <div class="bg-cover bg-center hidden md:block"
+         style="background-image: url('{{ asset('images/login-bg.jpg') }}');">
+    </div>
+
+    <!-- Columna formulario -->
+    <div class="flex items-center justify-center bg-gray-100">
+        {{ $slot }}
+    </div>
+</div>
+
+
 
         @livewireScripts
     </body>

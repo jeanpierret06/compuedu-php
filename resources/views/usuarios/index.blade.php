@@ -16,7 +16,6 @@
                             <th>Apellido</th>
                             <th>telefono</th>
                             <th>Correo</th>
-                            <th>Rol</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -33,7 +32,6 @@
                                 <td>{{ $s->APELLIDO_USUARIO }}</td>
                                 <td>{{ $s->TELEFONO_USUARIO }}</td>
                                 <td>{{ $s->EMAIL_USUARIO}}</td>
-                                <td>{{$s->ROL_ID}}</td>
                                 <td>
      <a href="{{ route('usuario.edit', $s->ID_USUARIOS) }}" class="px-2 py-1 bg-blue-500 text-white rounded">Editar</a>
     <form action="{{ route('usuario.destroy', $s->ID_USUARIOS) }}" method="POST" style="display:inline" onsubmit="return confirm('¿Eliminar este usuario?')">
