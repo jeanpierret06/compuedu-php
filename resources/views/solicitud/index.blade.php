@@ -30,7 +30,7 @@
                             <tr>
                                 <td>{{ $s->ID_SOLICITUD }}</td>
                                 <td>{{ $s->NOMBRE }}</td>
-                                <td>{{ optional($s->FECHA_SOLICITUD)->format('d/m/Y') }}</td>
+                                <td>{{ $s->FECHA_SOLICITUD->format('d/m/Y') }}</td>
                                 <td>
                                     @if($s->ESTADO == 1)
                                         <span class="px-2 py-1 bg-green-200 text-green-800 rounded">Aprobada</span>

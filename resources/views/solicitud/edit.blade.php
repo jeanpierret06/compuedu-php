@@ -11,7 +11,7 @@
                 <form action="{{ route('solicitud.update', $solicitud->ID_SOLICITUD) }}" method="POST" class="space-y-6">
                     @csrf
                     @method('PUT')
-                    @include('solicitudes._form', ['solicitud' => $solicitud])
+                    @include('solicitud._form', ['solicitud' => $solicitud])
 
                     <div class="flex gap-3 pt-4">
                         <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Actualizar</button>

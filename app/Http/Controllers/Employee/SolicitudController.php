@@ -24,11 +24,18 @@ class SolicitudController extends Controller
     }
 
     public function store(StoreSolicitudRequest $request)
-    {
-        Solicitud::create($request->validated());
-        return redirect()->route('solicitud.index')
-                         ->with('success', 'Solicitud creada correctamente.');
-    }
+{
+Solicitud::create([
+    'NOMBRE'          => $request->NOMBRE,
+    'ID_PROGRAMA'     => $request->ID_PROGRAMA, // 👈 IMPORTANTE
+    'FECHA_SOLICITUD' => $request->FECHA_SOLICITUD,
+    'ESTADO'          => $request->ESTADO,
+]);
+
+    return redirect()->route('solicitud.index')
+                     ->with('success', 'Solicitud creada correctamente.');
+}
+
 
     public function show($id)
     {

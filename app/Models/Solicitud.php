@@ -28,37 +28,37 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Solicitud extends Model
 {
-	protected $table = 'solicitud';
-	protected $primaryKey = 'ID_SOLICITUD';
-	public $timestamps = false;
+    protected $table = 'solicitud';
+    protected $primaryKey = 'ID_SOLICITUD';
+    public $timestamps = false;
 
-	protected $casts = [
-		'PROGRAMA_ID' => 'int',
-		'FECHA_SOLICITUD' => 'datetime',
-		'ESTADO' => 'int'
-	];
+    protected $casts = [
+        'ID_PROGRAMA' => 'int',
+        'FECHA_SOLICITUD' => 'date',
+        'ESTADO' => 'int'
+    ];
 
-	protected $fillable = [
-		'NOMBRE',
-		'PROGRAMA_ID',
-		'FECHA_SOLICITUD',
-		'ESTADO',
-		'PROGRAMA'
-	];
-
-public function programa()
-{
-    return $this->belongsTo(Programa::class, 'ID_SOLICITUD', 'ID_PROGRAMA');
-}
+protected $fillable = [
+    'NOMBRE',
+    'ID_PROGRAMA',
+    'FECHA_SOLICITUD',
+    'ESTADO'
+];
 
 
-	public function estudiantes()
-	{
-		return $this->hasMany(Estudiante::class, 'SOLICITUD_ID');
-	}
+    public function programa()
+    {
+        // FK = ID_PROGRAMA en solicitud, PK = ID_PROGRAMA en programa
+        return $this->belongsTo(Programa::class, 'ID_PROGRAMA', 'ID_PROGRAMA');
+    }
 
-	public function institucions()
-	{
-		return $this->hasMany(Institucion::class, 'SOLICITUD_ID');
-	}
+    public function estudiantes()
+    {
+        return $this->hasMany(Estudiante::class, 'SOLICITUD_ID');
+    }
+
+    public function institucions()
+    {
+        return $this->hasMany(Institucion::class, 'SOLICITUD_ID');
+    }
 }
